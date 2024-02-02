@@ -14,6 +14,7 @@ const Layout = () => {
         tabBarLabelStyle: {
           fontFamily: 'mon-sb',
         },
+        // tabBarStyle: { height: 70, },
       }}
     >
       <Tabs.Screen
