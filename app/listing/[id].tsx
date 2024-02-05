@@ -1,5 +1,5 @@
-import { useLocalSearchParams } from 'expo-router'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useLocalSearchParams, useNavigation } from 'expo-router'
+import { Image, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import listingsData from '@/assets/data/airbnb-listings.json'
 import Animated, {
   SlideInDown,
@@ -10,8 +10,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { Ionicons } from '@expo/vector-icons'
 import Colors from '@/constants/Colors'
-import { transform } from '@babel/core'
-import { ALWAYS } from 'expo-secure-store'
+import { useLayoutEffect } from 'react'
 
 const IMG_HEIGHT = 300
 
@@ -20,7 +19,84 @@ const Page = () => {
   const listing = (listingsData as any[]).find((item) => item.id === id)
   const scrollRef = useAnimatedRef<Animated.ScrollView>()
   const scrollOffset = useScrollViewOffset(scrollRef)
+  const navigation = useNavigation()
 
+  const shareListing = async () => {
+    try {
+      await Share.share({
+        title: listing.name,
+        url: listing.listing_url,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackground: () => (
+        <Animated.View
+          style={[
+            {
+              backgroundColor: '#fff',
+              height: 100,
+              borderBottomColor: Colors.grey,
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            },
+            headerAnimatedStyle,
+          ]}
+        ></Animated.View>
+      ),
+      headerRight: () => (
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#fff',
+              width: 40,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 999,
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: Colors.grey,
+            }}
+          >
+            <Ionicons name="heart-outline" size={22} color={`#000`} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={shareListing}
+            style={{
+              backgroundColor: '#fff',
+              width: 40,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 999,
+              borderWidth: StyleSheet.hairlineWidth,
+              borderColor: Colors.grey,
+            }}
+          >
+            <Ionicons name="share-outline" size={22} color={`#000`} />
+          </TouchableOpacity>
+        </View>
+      ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: '#fff',
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            borderRadius: 999,
+            borderWidth: StyleSheet.hairlineWidth,
+            borderColor: Colors.grey,
+          }}
+        >
+          <Ionicons style={{ marginLeft: 6 }} name="chevron-back" size={24} color={`#000`} />
+        </TouchableOpacity>
+      ),
+    })
+  }, [])
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -38,6 +114,11 @@ const Page = () => {
     }
   })
 
+  const headerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollOffset.value, [0, IMG_HEIGHT / 1.5], [0, 1]),
+    }
+  })
   return (
     <Animated.View style={styles.container}>
       <Animated.ScrollView
