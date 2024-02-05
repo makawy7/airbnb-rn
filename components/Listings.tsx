@@ -11,21 +11,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated'
 interface Props {
   listings: any[]
   category: string
 }
 
 const Listings = ({ listings, category }: Props) => {
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    console.log(listings.length)
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 200)
   }, [category])
 
   const renderRow: ListRenderItem<any> = ({ item }) => (
     <Link href={`/listing/${item.id}`} asChild>
       <TouchableOpacity activeOpacity={0.7}>
-        <View style={styles.listing}>
+        <Animated.View style={styles.listing} entering={FadeInRight} exiting={FadeOutLeft}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: item.medium_url }} />
           </View>
@@ -42,20 +46,19 @@ const Listings = ({ listings, category }: Props) => {
                 <Text style={{ fontFamily: 'mon' }}>{item.review_scores_rating / 20}</Text>
               </View>
             </View>
-            <Text>Indiviudal Host</Text>
-            <Text>24-29 Nov</Text>
+            <Text>{item.room_type}</Text>
             <Text>
-              <Text style={{ fontFamily: 'mon-b' }}>${item.weekly_price}</Text> week
+              <Text style={{ fontFamily: 'mon-b' }}>€{item.price}</Text> night
             </Text>
           </View>
-        </View>
+        </Animated.View>
       </TouchableOpacity>
     </Link>
   )
 
   return (
     <View>
-      <FlatList renderItem={renderRow} data={listings} />
+      <FlatList renderItem={renderRow} data={loading ? [] : listings} />
     </View>
   )
 }
@@ -67,14 +70,14 @@ const styles = StyleSheet.create({
   imageContainer: {
     backgroundColor: '#fff',
 
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    elevation: 8,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 8,
+    // },
+    // shadowOpacity: 0.12,
+    // shadowRadius: 8,
+    // elevation: 8,
     borderRadius: 20,
   },
   image: {
