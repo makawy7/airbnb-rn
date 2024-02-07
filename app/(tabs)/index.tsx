@@ -4,6 +4,8 @@ import ExploreHeader from '@/components/ExploreHeader'
 import Listings from '@/components/Listings'
 import { useMemo, useState } from 'react'
 import listingsData from '@/assets/data/airbnb-listings.json'
+import listingsDataGeo from '@/assets/data/airbnb-listings.geo.json'
+import ListingsMap from '@/components/ListingsMap'
 const Page = () => {
   const [category, setCategory] = useState<string>('Tiny homes')
   const listings = useMemo(() => listingsData as any, [])
@@ -18,7 +20,8 @@ const Page = () => {
           header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
         }}
       />
-      <Listings listings={listings} category={category}></Listings>
+      {/* <Listings listings={listings} category={category}></Listings> */}
+      <ListingsMap listings={listingsDataGeo} />
     </View>
   )
 }

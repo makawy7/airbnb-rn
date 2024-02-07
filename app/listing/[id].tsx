@@ -97,6 +97,7 @@ const Page = () => {
       ),
     })
   }, [])
+  
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
