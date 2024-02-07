@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router'
 import { View, StyleSheet, Text } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import MapView from 'react-native-map-clustering'
+import Colors from '@/constants/Colors'
 
 interface Props {
   listings: any
@@ -76,16 +77,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 6,
     borderRadius: 12,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.grey,
   },
   markerText: {
     fontSize: 14,

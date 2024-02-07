@@ -61,7 +61,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
         styles.container,
         {
           paddingTop: insets.top + 20,
-          paddingBottom: insets.bottom,
+          // paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 8,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.12,
     shadowRadius: 8,
     elevation: 8,
   },
