@@ -100,7 +100,7 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
             <MaterialIcons
               color={activeIndex === index ? Colors.dark : Colors.grey}
               name={icon as any}
-              size={40}
+              size={30}
             />
             <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>
               {name}
