@@ -8,6 +8,8 @@ import * as SecureStore from 'expo-secure-store'
 import { useAuth } from '@clerk/clerk-expo'
 import { ClerkProvider } from '@clerk/clerk-expo'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
@@ -64,9 +66,11 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <RootLayoutNav />
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <RootLayoutNav />
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   )
 }
 

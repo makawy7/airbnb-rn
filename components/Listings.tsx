@@ -2,15 +2,10 @@ import { defaultStyles } from '@/constants/Styles'
 import { Ionicons } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 import { useEffect, useState } from 'react'
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Image, ListRenderItem, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { FlatList } from 'react-native-gesture-handler'
+
 import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated'
 interface Props {
   listings: any[]
@@ -58,7 +53,12 @@ const Listings = ({ listings, category }: Props) => {
 
   return (
     <View>
-      <FlatList renderItem={renderRow} data={loading ? [] : listings} />
+      <FlatList
+        data={loading ? [] : listings}
+        renderItem={renderRow}
+        keyExtractor={(item) => item.id.toString()}
+        maxToRenderPerBatch={10}
+      />
     </View>
   )
 }
