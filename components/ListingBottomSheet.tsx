@@ -12,7 +12,7 @@ interface Props {
 
 const ListingBottomSheet = ({ listings, category }: Props) => {
   const bottomSheetRef = useRef<BottomSheet>(null)
-  const snapPoints = useMemo(() => ['5%', '100%'], [])
+  const snapPoints = useMemo(() => ['10%', '100%'], [])
 
   const showMap = () => {
     bottomSheetRef.current?.collapse()

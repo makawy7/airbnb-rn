@@ -1,5 +1,6 @@
 import { defaultStyles } from '@/constants/Styles'
 import { Ionicons } from '@expo/vector-icons'
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { Link } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Image, ListRenderItem, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -52,12 +53,17 @@ const Listings = ({ listings, category }: Props) => {
   )
 
   return (
-    <View>
-      <FlatList
+    <View style={{ flex: 1 }}>
+      <BottomSheetFlatList
         data={loading ? [] : listings}
         renderItem={renderRow}
         keyExtractor={(item) => item.id.toString()}
         maxToRenderPerBatch={10}
+        ListHeaderComponent={
+          <Text style={{ fontFamily: 'mon-sb', textAlign: 'center', fontSize: 16 }}>
+            {listings.length} Homes
+          </Text>
+        }
       />
     </View>
   )

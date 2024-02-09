@@ -3,12 +3,13 @@ import { View, StyleSheet, Text } from 'react-native'
 import { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import MapView from 'react-native-map-clustering'
 import Colors from '@/constants/Colors'
+import { memo } from 'react'
 
 interface Props {
   listings: any
 }
 
-const ListingsMap: React.FC<Props> = ({ listings }) => {
+const ListingsMap: React.FC<Props> = memo(({ listings }) => {
   const router = useRouter()
   const INITIAL_REGION = {
     latitude: 52.52,
@@ -66,7 +67,7 @@ const ListingsMap: React.FC<Props> = ({ listings }) => {
       </MapView>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   map: {
